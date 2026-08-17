@@ -1,0 +1,7 @@
+{"timestamp":"00:00:59.146","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:06:12.913","source":"Server","level":"LOG","message":"○ Compiling / ..."}
+{"timestamp":"00:07:56.460","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:08:00.304","source":"Server","level":"LOG","message":"○ Compiling /api/auth/me ..."}
+{"timestamp":"00:09:13.091","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:11:13.185","source":"Server","level":"LOG","message":"○ Compiling /api/auth/login ..."}
+{"timestamp":"00:11:14.752","source":"Server","level":"ERROR","message":"Error: Failed query: select \"id\", \"name\", \"email\", \"password_hash\", \"created_at\" from \"users\" where \"users\".\"email\" = $1 limit $2\nparams: demo@findlost.app,1"}
