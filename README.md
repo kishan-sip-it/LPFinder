@@ -1,71 +1,194 @@
-# 🧭 ReuniteFind — Find Lost People
+# ReuniteFind — Find Lost People
 
-A compassionate full-stack platform that helps families report and track missing
-loved ones. Informers can add a person's photo (captured directly from the camera
-or uploaded), record their identity, identifying marks, last-seen information, and
-contact details — all stored securely and organized in a clean dashboard.
+ReuniteFind is a full-stack web application for reporting and tracking missing-person cases. It provides authentication, case CRUD, search/filtering, status tracking, camera/photo capture, a dashboard, and seeded demo data.
 
-> **Note on stack:** The request asked for a React + Tailwind (`.jsx`) frontend with
-> a Python backend. This project runs on a managed **Next.js (App Router)** runtime,
-> so the **frontend is written entirely in React `.jsx` component files** and the
-> **backend is implemented as Next.js API routes (Node.js)** which serve the same
-> purpose as a REST API. Data is stored in **PostgreSQL** via Drizzle ORM.
+## Stack
 
----
+- **Frontend:** React 19 components inside Next.js App Router
+- **Framework/runtime:** Next.js 16.2.6
+- **Styling:** Tailwind CSS 4
+- **Backend:** Next.js API routes (Node.js)
+- **Database:** PostgreSQL
+- **ORM:** Drizzle ORM
+- **Authentication:** bcryptjs + jose (HTTP-only JWT cookie)
 
-## ✨ Features
+## Requirements
 
-- **Authentication** — email/password sign-up & login with hashed passwords
-  (bcrypt) and signed, HTTP-only JWT session cookies (jose).
-- **Camera capture** — take a photo of the report directly from the device camera,
-  or upload an existing image. Photos are stored as data URLs.
-- **Full CRUD** — create, read, update, and delete missing-person reports.
-- **Rich identity records** — name, age, gender, height, complexion, identifying
-  marks, last-seen location/date, clothing, description, and informer contact info.
-- **Case status tracking** — `missing`, `investigating`, `found` with
-  **optimistic updates** and automatic rollback on failure.
-- **Dashboard** — sidebar navigation, live stats overview, and recent reports.
-- **Search & filter** — debounced search by name/location and status filters.
-- **Polished UX** — empty states, loading skeletons, responsive design, and a
-  mobile-friendly collapsible sidebar.
-- **Seeded demo data** — one click loads a demo account full of realistic cases.
+- Node.js 20+ (Node 22 works)
+- PostgreSQL running locally
+- npm
 
----
-
-## 🚀 Getting Started
+## 1. Install dependencies
 
 ```bash
 npm install
+```
+
+## 2. Create the local database
+
+Open PostgreSQL:
+
+```bash
+psql -U postgres
+```
+
+Create the database:
+
+```sql
+CREATE DATABASE find_db;
+```
+
+Exit:
+
+```sql
+\q
+```
+
+## 3. Configure environment variables
+
+Create `.env.local` in the project root:
+
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@127.0.0.1:5432/find_db
+AUTH_SECRET=change-this-for-local-development
+```
+
+Do not commit `.env.local` or `.env`.
+
+## 4. Create the database schema
+
+Preferred method:
+
+```bash
+npx drizzle-kit push
+```
+
+If the Drizzle CLI stops while pulling the schema and the database is still empty, create the two application tables manually in `find_db` using the SQL below.
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS lost_persons (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  full_name VARCHAR(160) NOT NULL,
+  age INTEGER,
+  gender VARCHAR(20),
+  height VARCHAR(40),
+  complexion VARCHAR(60),
+  identifying_marks TEXT,
+  photo_url TEXT,
+  last_seen_location VARCHAR(240),
+  last_seen_date VARCHAR(40),
+  clothing_description TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'missing',
+  description TEXT,
+  reporter_name VARCHAR(160),
+  reporter_relation VARCHAR(80),
+  contact_phone VARCHAR(60),
+  contact_email VARCHAR(255),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS lost_persons_user_idx
+  ON lost_persons(user_id);
+
+CREATE INDEX IF NOT EXISTS lost_persons_status_idx
+  ON lost_persons(status);
+```
+
+Verify the tables:
+
+```bash
+psql -U postgres -d find_db
+```
+
+```sql
+\dt
+```
+
+You should see `users` and `lost_persons`.
+
+## 5. Run locally
+
+```bash
 npm run dev
 ```
 
-Then open the app and click **"🚀 Explore live demo"** on the login screen. This
-seeds the database and signs you in as the demo family.
+Open:
 
-**Demo credentials**
-
-| Email                 | Password   |
-| --------------------- | ---------- |
-| `demo@findlost.app`   | `demo1234` |
-
----
-
-## 🗂️ Project Structure
-
+```text
+http://localhost:3000
 ```
+
+## 6. Load the demo data
+
+The app includes a seed API route. It creates the demo user if needed and inserts the demo case records.
+
+With the development server running, open a second terminal and run:
+
+### PowerShell
+
+```powershell
+Invoke-WebRequest -Uri "http://localhost:3000/api/seed" -Method POST
+```
+
+### curl
+
+```bash
+curl -X POST http://localhost:3000/api/seed
+```
+
+Demo account:
+
+| Email | Password |
+| --- | --- |
+| `demo@findlost.app` | `demo1234` |
+
+You can also use the **Explore live demo** button on the login screen.
+
+## Features
+
+- Email/password registration and login
+- HTTP-only JWT sessions
+- Password hashing with bcrypt
+- Create, read, update, and delete reports
+- Search by name/location
+- Status filters: `missing`, `investigating`, `found`
+- Dashboard statistics
+- Camera capture / image upload
+- Responsive dashboard with collapsible mobile navigation
+- Demo seeding endpoint
+- Health-check endpoint
+
+## Project structure
+
+```text
 src/
 ├─ app/
 │  ├─ api/
-│  │  ├─ auth/{register,login,logout,me}/route.ts   # Auth backend
-│  │  ├─ persons/route.ts                           # List & create
-│  │  ├─ persons/[id]/route.ts                      # Read, update, delete
-│  │  ├─ stats/route.ts                             # Dashboard stats
-│  │  ├─ seed/route.ts                              # Demo data seeding
-│  │  └─ health/route.ts                            # Healthcheck
-│  ├─ dashboard/                                    # Protected dashboard pages
-│  ├─ page.tsx                                       # Landing + auth
-│  └─ layout.tsx
-├─ components/            # React frontend — all .jsx files
+│  │  ├─ auth/
+│  │  │  ├─ register/route.ts
+│  │  │  ├─ login/route.ts
+│  │  │  ├─ logout/route.ts
+│  │  │  └─ me/route.ts
+│  │  ├─ persons/route.ts
+│  │  ├─ persons/[id]/route.ts
+│  │  ├─ stats/route.ts
+│  │  ├─ seed/route.ts
+│  │  └─ health/route.ts
+│  ├─ dashboard/
+│  ├─ page.tsx
+│  ├─ layout.tsx
+│  └─ globals.css
+├─ components/
 │  ├─ AuthProvider.jsx
 │  ├─ HomeClient.jsx
 │  ├─ DashboardShell.jsx
@@ -77,38 +200,44 @@ src/
 │  ├─ CameraCapture.jsx
 │  └─ StatusBadge.jsx
 ├─ db/
-│  ├─ schema.ts           # Drizzle schema (users, lost_persons)
-│  └─ index.ts            # DB client
+│  ├─ schema.ts
+│  └─ index.ts
 └─ lib/
-   └─ auth.ts             # Session + password helpers
+   └─ auth.ts
 ```
 
+## Useful commands
+
+```bash
+npm run dev
+npm run build
+npm start
+npm run lint
+npm run typecheck
+```
+
+## Camera permissions
+
+Camera capture uses the browser `getUserMedia` API. It works on `localhost` and on HTTPS deployments, subject to browser permission. Uploading an existing image is available as a fallback.
+
+## Security notes
+
+- Keep `DATABASE_URL` and `AUTH_SECRET` in environment variables.
+- Do not commit `.env` or `.env.local`.
+- If a database password has ever been committed to Git history, rotate that password before deploying.
+- The demo credentials are intentionally part of the demo flow; do not use them for production accounts.
+
+## Production checklist
+
+Before deployment, configure the production `DATABASE_URL` and `AUTH_SECRET`, ensure PostgreSQL is reachable from the server, apply the database schema, and run:
+
+```bash
+npm run build
+npm start
+```
+
+The repository is a Next.js application, so it should be deployed as a Node/Next.js service rather than as a static-only site.
+
 ---
 
-## 🧰 Tech Stack
-
-- **Frontend:** React 19 (`.jsx` components), Tailwind CSS v4
-- **Backend:** Next.js API routes (Node.js)
-- **Database:** PostgreSQL + Drizzle ORM
-- **Auth:** bcryptjs + jose (JWT)
-
----
-
-## 🔐 Environment Variables
-
-| Variable       | Description                                  |
-| -------------- | -------------------------------------------- |
-| `DATABASE_URL` | PostgreSQL connection string                 |
-| `AUTH_SECRET`  | Secret used to sign session JWTs (optional)  |
-
----
-
-## 📸 Camera Permissions
-
-The camera feature uses the browser `getUserMedia` API and requires HTTPS (or
-`localhost`) and user permission. If the camera is unavailable, users can upload a
-photo instead.
-
----
-
-Built with care for families searching for hope. 💙
+Built with care for families searching for hope.
