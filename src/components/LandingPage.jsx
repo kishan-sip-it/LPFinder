@@ -9,12 +9,9 @@ export default function LandingPage() {
       <div className="rf-glow rf-glow-right" />
 
       <div className="rf-shell">
-
-        {/* HEADER */}
         <header className="rf-header">
           <Link href="/" className="rf-brand">
             <span className="rf-brand-icon">🧭</span>
-
             <span>
               <strong>ReuniteFind</strong>
               <small>Find · Report · Reunite</small>
@@ -26,19 +23,14 @@ export default function LandingPage() {
           </Link>
         </header>
 
-        {/* MAIN CARD */}
         <section className="rf-card">
-
-          {/* ================= DETECTIVE ================= */}
-          <div className="rf-detective">
-
+          {/* Detective sits BEHIND the card */}
+          <div className="rf-detective" aria-hidden="true">
             <div className="rf-body" />
-
             <div className="rf-head">
               <span className="rf-eye rf-eye-left">
                 <i />
               </span>
-
               <span className="rf-eye rf-eye-right">
                 <i />
               </span>
@@ -54,108 +46,77 @@ export default function LandingPage() {
               <span className="rf-glass" />
               <span className="rf-handle" />
             </div>
-
           </div>
 
-          {/* ================= CONTENT ================= */}
           <div className="rf-content">
-
             <div className="rf-left">
-
-              <span className="rf-kicker">
-                EVERY CLUE MATTERS
-              </span>
+              <span className="rf-kicker">EVERY CLUE MATTERS</span>
 
               <h1>
                 Find the missing piece.
-                <span>
-                  Bring someone home.
-                </span>
+                <span>Bring someone home.</span>
               </h1>
 
               <p className="rf-description">
-                ReuniteFind gives families one organized place to report
-                missing loved ones, search existing cases, and keep important
-                information together.
+                ReuniteFind keeps missing-person reports organized, searchable,
+                and easy to follow — from the first report to the moment a case
+                is resolved.
               </p>
 
               <div className="rf-info-grid">
-
                 <InfoCard
                   title="Report"
                   text="Photos, identity and last-seen details."
                 />
-
                 <InfoCard
                   title="Search"
-                  text="Browse cases and look for familiar clues."
+                  text="Browse existing cases and clues."
                 />
-
                 <InfoCard
                   title="Follow"
-                  text="Keep every case organized from start to finish."
+                  text="Keep every case organized."
                 />
-
               </div>
-
             </div>
 
-            {/* ================= ACTION CARD ================= */}
             <div className="rf-actions">
+              <span className="rf-action-label">START HERE</span>
 
-              <span className="rf-action-label">
-                START HERE
-              </span>
+              <h2>What are you looking for?</h2>
 
-              <h2>
-                What are you looking for?
-              </h2>
-
-              <p>
-                Choose the path that matches what you need today.
-              </p>
+              <p>Choose the path that matches what you need today.</p>
 
               <div className="rf-buttons">
-
                 <Link
                   href="/login?intent=reporter"
                   className="rf-button rf-report"
                 >
                   <div>
                     <strong>Report someone</strong>
-                    <small>
-                      Create a missing-person report.
-                    </small>
+                    <small>Create a missing-person report.</small>
                   </div>
-
                   <span>→</span>
                 </Link>
 
                 <Link
-                  href="/login?intent=finder"
+                  href="/browse"
                   className="rf-button rf-find"
                 >
                   <div>
                     <strong>Looking for someone</strong>
-                    <small>
-                      Search listed missing-person cases.
-                    </small>
+                    <small>Browse listed missing-person cases.</small>
                   </div>
-
                   <span>→</span>
                 </Link>
-
               </div>
 
               <div className="rf-security">
                 <span>✦</span>
-
                 <p>
-                  Your account permissions determine what you can manage.
-                  Viewing a case does not automatically grant edit access.
+                  Public case viewing is read-only. Your own submitted reports
+                  are managed separately.
                 </p>
               </div>
-
             </div>
           </div>
         </section>
@@ -164,45 +125,19 @@ export default function LandingPage() {
           Built for families searching for hope ·
           <span> ReuniteFind</span>
         </footer>
-
       </div>
 
       <style jsx global>{`
-
-        /* =====================================================
-           REUNITEFIND LANDING PAGE
-           ===================================================== */
-
         .rf-landing {
           min-height: 100vh;
           position: relative;
           isolation: isolate;
           overflow: hidden;
-
           background:
-            radial-gradient(
-              circle at 8% 10%,
-              rgba(79,70,229,.30),
-              transparent 30%
-            ),
-            radial-gradient(
-              circle at 92% 10%,
-              rgba(168,85,247,.25),
-              transparent 30%
-            ),
-            radial-gradient(
-              circle at 80% 90%,
-              rgba(236,72,153,.16),
-              transparent 28%
-            ),
-            linear-gradient(
-              135deg,
-              #030305 0%,
-              #0a0c1e 34%,
-              #211039 68%,
-              #060509 100%
-            );
-
+            radial-gradient(circle at 8% 10%, rgba(79,70,229,.30), transparent 30%),
+            radial-gradient(circle at 92% 10%, rgba(168,85,247,.25), transparent 30%),
+            radial-gradient(circle at 80% 90%, rgba(236,72,153,.16), transparent 28%),
+            linear-gradient(135deg, #030305 0%, #0a0c1e 34%, #211039 68%, #060509 100%);
           color: white;
         }
 
@@ -210,24 +145,18 @@ export default function LandingPage() {
           width: min(1180px, calc(100% - 40px));
           min-height: 100vh;
           margin: auto;
-
           display: flex;
           flex-direction: column;
           justify-content: center;
-
           padding: 35px 0;
         }
-
-        /* HEADER */
 
         .rf-header {
           position: relative;
           z-index: 20;
-
           display: flex;
           align-items: center;
           justify-content: space-between;
-
           margin-bottom: 20px;
         }
 
@@ -235,7 +164,6 @@ export default function LandingPage() {
           display: flex;
           align-items: center;
           gap: 12px;
-
           color: white;
           text-decoration: none;
         }
@@ -243,22 +171,11 @@ export default function LandingPage() {
         .rf-brand-icon {
           width: 46px;
           height: 46px;
-
           display: grid;
           place-items: center;
-
           border-radius: 15px;
-
-          background:
-            linear-gradient(
-              135deg,
-              #4f46e5,
-              #7c3aed,
-              #c084fc
-            );
-
-          box-shadow:
-            0 10px 30px rgba(124,58,237,.35);
+          background: linear-gradient(135deg, #4f46e5, #7c3aed, #c084fc);
+          box-shadow: 0 10px 30px rgba(124,58,237,.35);
         }
 
         .rf-brand strong {
@@ -269,24 +186,19 @@ export default function LandingPage() {
         .rf-brand small {
           display: block;
           margin-top: 2px;
-
           color: #aaa8c7;
           font-size: 12px;
         }
 
         .rf-signin {
           padding: 9px 17px;
-
           border: 1px solid rgba(196,181,253,.2);
           border-radius: 999px;
-
           background: rgba(255,255,255,.04);
-
           color: #ddd6fe;
           text-decoration: none;
           font-size: 13px;
           font-weight: 700;
-
           transition: .2s ease;
         }
 
@@ -296,45 +208,28 @@ export default function LandingPage() {
           color: white;
         }
 
-        /* MAIN CARD */
-
         .rf-card {
           position: relative;
-          overflow: visible;
-
+          overflow: hidden;
           padding: 48px;
-
-          border:
-            1px solid rgba(167,139,250,.22);
-
+          border: 1px solid rgba(167,139,250,.22);
           border-radius: 32px;
-
           background:
-            linear-gradient(
-              145deg,
-              rgba(20,20,38,.88),
-              rgba(7,7,14,.94)
-            );
-
+            linear-gradient(145deg, rgba(20,20,38,.88), rgba(7,7,14,.94));
           box-shadow:
             0 35px 90px rgba(0,0,0,.55),
             inset 0 1px 0 rgba(255,255,255,.06);
-
           backdrop-filter: blur(18px);
         }
 
         .rf-content {
           position: relative;
-          z-index: 5;
-
+          z-index: 10;
           display: grid;
           grid-template-columns: 1.05fr .95fr;
           gap: 55px;
-
           align-items: center;
         }
-
-        /* LEFT */
 
         .rf-left {
           padding-top: 28px;
@@ -342,16 +237,11 @@ export default function LandingPage() {
 
         .rf-kicker {
           display: inline-flex;
-
           padding: 6px 11px;
-
           border: 1px solid rgba(232,121,249,.2);
           border-radius: 999px;
-
           background: rgba(232,121,249,.08);
-
           color: #f0abfc;
-
           font-size: 10px;
           font-weight: 800;
           letter-spacing: .18em;
@@ -359,25 +249,15 @@ export default function LandingPage() {
 
         .rf-left h1 {
           margin: 18px 0 0;
-
           font-size: clamp(42px, 5vw, 68px);
           line-height: .96;
           letter-spacing: -.055em;
-
           color: white;
         }
 
         .rf-left h1 span {
           display: block;
-
-          background:
-            linear-gradient(
-              90deg,
-              #a5b4fc,
-              #c4b5fd,
-              #f0abfc
-            );
-
+          background: linear-gradient(90deg, #a5b4fc, #c4b5fd, #f0abfc);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
@@ -385,11 +265,8 @@ export default function LandingPage() {
 
         .rf-description {
           max-width: 590px;
-
           margin-top: 22px;
-
           color: #aeb1c6;
-
           font-size: 15px;
           line-height: 1.8;
         }
@@ -397,63 +274,40 @@ export default function LandingPage() {
         .rf-info-grid {
           display: grid;
           grid-template-columns: repeat(3,1fr);
-
           gap: 10px;
-
           margin-top: 28px;
         }
 
         .rf-info {
           padding: 15px;
-
-          border:
-            1px solid rgba(255,255,255,.08);
-
+          border: 1px solid rgba(255,255,255,.08);
           border-radius: 16px;
-
           background: rgba(255,255,255,.035);
         }
 
         .rf-info strong {
           display: block;
-
           color: #ddd6fe;
           font-size: 12px;
         }
 
         .rf-info p {
           margin: 5px 0 0;
-
           color: #81859e;
-
           font-size: 11px;
           line-height: 1.5;
         }
 
-        /* ACTION CARD */
-
         .rf-actions {
           padding: 25px;
-
-          border:
-            1px solid rgba(255,255,255,.09);
-
+          border: 1px solid rgba(255,255,255,.09);
           border-radius: 25px;
-
-          background:
-            linear-gradient(
-              145deg,
-              rgba(255,255,255,.055),
-              rgba(255,255,255,.02)
-            );
-
-          box-shadow:
-            0 20px 50px rgba(0,0,0,.3);
+          background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+          box-shadow: 0 20px 50px rgba(0,0,0,.3);
         }
 
         .rf-action-label {
           color: #a78bfa;
-
           font-size: 10px;
           font-weight: 800;
           letter-spacing: .2em;
@@ -461,18 +315,14 @@ export default function LandingPage() {
 
         .rf-actions h2 {
           margin: 8px 0 0;
-
           color: white;
-
           font-size: 25px;
           font-weight: 850;
         }
 
         .rf-actions > p {
           margin-top: 7px;
-
           color: #8589a1;
-
           font-size: 13px;
           line-height: 1.6;
         }
@@ -480,9 +330,7 @@ export default function LandingPage() {
         .rf-buttons {
           display: flex;
           flex-direction: column;
-
           gap: 11px;
-
           margin-top: 24px;
         }
 
@@ -490,18 +338,11 @@ export default function LandingPage() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-
           padding: 17px;
-
           border-radius: 17px;
-
           color: white;
           text-decoration: none;
-
-          transition:
-            transform .2s ease,
-            border-color .2s ease,
-            box-shadow .2s ease;
+          transition: transform .2s ease, border-color .2s ease;
         }
 
         .rf-button:hover {
@@ -510,15 +351,12 @@ export default function LandingPage() {
 
         .rf-button strong {
           display: block;
-
           font-size: 14px;
         }
 
         .rf-button small {
           display: block;
-
           margin-top: 4px;
-
           font-size: 11px;
         }
 
@@ -528,17 +366,8 @@ export default function LandingPage() {
 
         .rf-report {
           border: 1px solid rgba(196,181,253,.3);
-
-          background:
-            linear-gradient(
-              110deg,
-              rgba(79,70,229,.9),
-              rgba(124,58,237,.9),
-              rgba(168,85,247,.85)
-            );
-
-          box-shadow:
-            0 12px 30px rgba(79,70,229,.22);
+          background: linear-gradient(110deg, rgba(79,70,229,.9), rgba(124,58,237,.9), rgba(168,85,247,.85));
+          box-shadow: 0 12px 30px rgba(79,70,229,.22);
         }
 
         .rf-report small {
@@ -547,13 +376,7 @@ export default function LandingPage() {
 
         .rf-find {
           border: 1px solid rgba(232,121,249,.2);
-
-          background:
-            linear-gradient(
-              110deg,
-              rgba(8,8,18,.95),
-              rgba(55,20,70,.72)
-            );
+          background: linear-gradient(110deg, rgba(8,8,18,.95), rgba(55,20,70,.72));
         }
 
         .rf-find small {
@@ -563,15 +386,10 @@ export default function LandingPage() {
         .rf-security {
           display: flex;
           gap: 10px;
-
           margin-top: 15px;
           padding: 12px;
-
-          border:
-            1px solid rgba(255,255,255,.07);
-
+          border: 1px solid rgba(255,255,255,.07);
           border-radius: 15px;
-
           background: rgba(0,0,0,.18);
         }
 
@@ -581,451 +399,224 @@ export default function LandingPage() {
 
         .rf-security p {
           margin: 0;
-
           color: #74788f;
-
           font-size: 10px;
           line-height: 1.6;
         }
 
-        /* =====================================================
-           DETECTIVE
-           ===================================================== */
+        /* ================= DETECTIVE =================
+           It lives inside the card but is visually behind
+           the card content. The clipping is intentional.
+        */
 
         .rf-detective {
           position: absolute;
-
+          z-index: 1;
           left: 50%;
-          top: 0;
-
-          width: 340px;
-          height: 220px;
-
-          z-index: 2;
-
-          transform:
-            translate(-50%, -72%)
-            rotate(-2deg);
-
+          top: -2px;
+          width: 310px;
+          height: 185px;
+          transform: translate(-50%, -78%);
           transform-origin: 50% 100%;
+          animation: rf-peek 14s cubic-bezier(.65,.05,.35,1) infinite;
+          pointer-events: none;
+        }
 
-          animation:
-            rf-detective-peek
-            14s
-            ease-in-out
-            infinite;
+        .rf-content {
+          position: relative;
+          z-index: 5;
         }
 
         .rf-body {
           position: absolute;
-
           left: 50%;
-          bottom: 0;
-
-          width: 145px;
-          height: 105px;
-
+          bottom: -2px;
+          width: 130px;
+          height: 96px;
           transform: translateX(-50%);
-
-          border-radius: 65px 65px 12px 12px;
-
-          background:
-            linear-gradient(
-              180deg,
-              #171722,
-              #030305
-            );
-
-          box-shadow:
-            0 20px 35px rgba(0,0,0,.65);
+          border-radius: 58px 58px 12px 12px;
+          background: linear-gradient(180deg, #171722, #030305);
         }
 
         .rf-head {
           position: absolute;
-
           left: 50%;
-          top: 64px;
-
-          width: 105px;
-          height: 82px;
-
+          top: 52px;
+          width: 92px;
+          height: 72px;
           transform: translateX(-50%);
-
-          border-radius:
-            48%
-            48%
-            43%
-            43%;
-
-          background: #050508;
-
-          border:
-            1px solid rgba(255,255,255,.06);
-
-          box-shadow:
-            0 15px 30px rgba(0,0,0,.65);
+          border-radius: 48%;
+          background: #06060a;
+          border: 1px solid rgba(255,255,255,.05);
+          box-shadow: 0 12px 28px rgba(0,0,0,.5);
         }
 
         .rf-eye {
           position: absolute;
-
-          top: 32px;
-
-          width: 10px;
-          height: 10px;
-
+          top: 29px;
+          width: 9px;
+          height: 9px;
           border-radius: 50%;
-
-          background: #ff1938;
-
-          box-shadow:
-            0 0 12px #ff1938,
-            0 0 28px rgba(255,25,56,.5);
-
-          animation:
-            rf-eye-glow
-            3.4s
-            ease-in-out
-            infinite;
+          background: #ff1636;
+          box-shadow: 0 0 10px #ff1636, 0 0 22px rgba(255,22,54,.45);
         }
 
-        .rf-eye-left {
-          left: 25px;
-        }
-
-        .rf-eye-right {
-          right: 25px;
-
-          animation-delay: .1s;
-        }
+        .rf-eye-left { left: 22px; }
+        .rf-eye-right { right: 22px; }
 
         .rf-eye i {
           position: absolute;
-
-          inset: 2px;
-
+          top: 2px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
-
-          background: #610612;
+          background: #3b0208;
         }
 
-        .rf-eye-left i {
-          animation:
-            rf-eye-scan
-            3.4s
-            ease-in-out
-            infinite;
+        /* BOTH pupils always move together */
+        .rf-eye i {
+          animation: rf-eyes-together 2.6s ease-in-out infinite;
         }
 
         .rf-eye-right i {
-          animation:
-            rf-eye-scan-reverse
-            3.4s
-            ease-in-out
-            infinite;
+          animation-delay: 0s;
         }
 
-        /* HAT */
+        @keyframes rf-eyes-together {
+          0%, 100% { left: 2px; }
+          22% { left: 2px; }
+          38% { left: 5px; }
+          52% { left: 5px; }
+          68% { left: 2px; }
+          82% { left: 2px; }
+        }
 
         .rf-hat {
           position: absolute;
-
           left: 50%;
-          top: 10px;
-
-          width: 185px;
-          height: 75px;
-
-          transform:
-            translateX(-50%)
-            rotate(-4deg);
+          top: 1px;
+          width: 170px;
+          height: 65px;
+          transform: translateX(-50%) rotate(-3deg);
         }
 
         .rf-hat-crown {
           position: absolute;
-
           left: 50%;
-          bottom: 22px;
-
-          width: 82px;
-          height: 48px;
-
+          bottom: 20px;
+          width: 76px;
+          height: 44px;
           transform: translateX(-50%);
-
-          border-radius:
-            28px
-            28px
-            10px
-            10px;
-
-          background:
-            linear-gradient(
-              180deg,
-              #1a1a27,
-              #040407
-            );
-
-          border:
-            1px solid rgba(255,255,255,.08);
+          border-radius: 24px 24px 8px 8px;
+          background: linear-gradient(180deg,#1c1c29,#040407);
         }
 
         .rf-hat-band {
           position: absolute;
-
           left: 50%;
-          bottom: 29px;
-
-          width: 80px;
-          height: 7px;
-
+          bottom: 27px;
+          width: 74px;
+          height: 6px;
           transform: translateX(-50%);
-
-          background:
-            linear-gradient(
-              90deg,
-              #312e81,
-              #a855f7,
-              #312e81
-            );
+          background: linear-gradient(90deg,#312e81,#a855f7,#312e81);
         }
 
         .rf-hat-brim {
           position: absolute;
-
           left: 50%;
-          bottom: 12px;
-
-          width: 178px;
-          height: 20px;
-
-          transform:
-            translateX(-50%)
-            rotate(-2deg);
-
+          bottom: 10px;
+          width: 165px;
+          height: 18px;
+          transform: translateX(-50%);
           border-radius: 50%;
-
-          background:
-            linear-gradient(
-              180deg,
-              #191925,
-              #040407
-            );
-
-          border:
-            1px solid rgba(255,255,255,.08);
-
-          box-shadow:
-            0 8px 18px rgba(0,0,0,.5);
+          background: linear-gradient(180deg,#171722,#040407);
         }
-
-        /* MAGNIFIER */
 
         .rf-magnifier {
           position: absolute;
-
-          right: 17px;
-          top: 104px;
-
-          width: 85px;
-          height: 85px;
-
+          right: 6px;
+          top: 86px;
+          width: 70px;
+          height: 70px;
           transform: rotate(-22deg);
         }
 
         .rf-glass {
           position: absolute;
-
-          width: 54px;
-          height: 54px;
-
-          border:
-            6px solid #c4b5fd;
-
+          width: 50px;
+          height: 50px;
+          border: 6px solid #c4b5fd;
           border-radius: 50%;
-
-          background:
-            rgba(129,140,248,.08);
-
-          box-shadow:
-            0 0 25px rgba(129,140,248,.25);
+          background: rgba(129,140,248,.08);
+          box-shadow: 0 0 22px rgba(129,140,248,.25);
         }
 
         .rf-handle {
           position: absolute;
-
-          left: 49px;
-          top: 48px;
-
-          width: 9px;
-          height: 40px;
-
+          left: 45px;
+          top: 43px;
+          width: 8px;
+          height: 34px;
           border-radius: 999px;
-
-          background:
-            linear-gradient(
-              180deg,
-              #c4b5fd,
-              #7c3aed
-            );
+          background: linear-gradient(180deg,#c4b5fd,#7c3aed);
         }
 
-        /* ANIMATION */
-
-        @keyframes rf-detective-peek {
-
-          0%,
-          7%,
-          17%,
-          100% {
-            transform:
-              translate(-50%, -72%)
-              rotate(-2deg);
+        @keyframes rf-peek {
+          0%, 7%, 15%, 100% {
+            transform: translate(-50%, -78%) rotate(0deg);
           }
 
-          10%,
-          14% {
-            transform:
-              translate(-50%, -28%)
-              rotate(1deg);
+          10%, 13% {
+            transform: translate(-50%, -28%) rotate(0deg);
           }
 
-          30%,
-          38% {
-            transform:
-              translate(-43%, -27%)
-              rotate(-6deg);
+          28%, 36% {
+            transform: translate(-84%, -28%) rotate(-7deg);
           }
 
-          42%,
-          50% {
-            transform:
-              translate(-43%, -69%)
-              rotate(-8deg);
+          39%, 47% {
+            transform: translate(-84%, -78%) rotate(-7deg);
           }
 
-          63%,
-          70% {
-            transform:
-              translate(-57%, -27%)
-              rotate(5deg);
+          59%, 67% {
+            transform: translate(-14%, -30%) rotate(7deg);
           }
 
-          74%,
-          82% {
-            transform:
-              translate(-57%, -69%)
-              rotate(8deg);
-          }
-        }
-
-        @keyframes rf-eye-scan {
-
-          0%,
-          18%,
-          100% {
-            transform: translateX(0);
+          70%, 78% {
+            transform: translate(-14%, -78%) rotate(7deg);
           }
 
-          28% {
-            transform: translateX(3px);
-          }
-
-          43% {
-            transform: translateX(-3px);
-          }
-
-          58% {
-            transform: translateX(3px);
-          }
-
-          72% {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes rf-eye-scan-reverse {
-
-          0%,
-          18%,
-          100% {
-            transform: translateX(0);
-          }
-
-          28% {
-            transform: translateX(-3px);
-          }
-
-          43% {
-            transform: translateX(3px);
-          }
-
-          58% {
-            transform: translateX(-3px);
-          }
-
-          72% {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes rf-eye-glow {
-
-          0%,
-          20%,
-          100% {
-            opacity: .75;
-            transform: scale(1);
-          }
-
-          30%,
-          44% {
-            opacity: 1;
-            transform: scale(1.18);
-          }
-
-          52%,
-          68% {
-            opacity: .55;
-            transform: scale(.9);
+          88%, 94% {
+            transform: translate(-50%, -28%) rotate(0deg);
           }
         }
 
         .rf-glow {
           position: absolute;
-
           z-index: -1;
-
           width: 350px;
           height: 350px;
-
           border-radius: 50%;
-
           filter: blur(90px);
-
           pointer-events: none;
         }
 
         .rf-glow-left {
           left: -150px;
           top: 20%;
-
           background: rgba(79,70,229,.2);
         }
 
         .rf-glow-right {
           right: -160px;
           bottom: 5%;
-
           background: rgba(192,132,252,.16);
         }
 
         footer {
           margin-top: 18px;
-
           text-align: center;
-
           color: #5e6278;
-
           font-size: 11px;
         }
 
@@ -1033,62 +624,34 @@ export default function LandingPage() {
           color: #8b5cf6;
         }
 
-        /* MOBILE */
-
         @media (max-width: 900px) {
-
-          .rf-card {
-            padding: 28px;
-          }
-
+          .rf-card { padding: 28px; }
           .rf-content {
             grid-template-columns: 1fr;
             gap: 35px;
           }
-
-          .rf-left {
-            padding-top: 35px;
-          }
-
+          .rf-left { padding-top: 35px; }
         }
 
         @media (max-width: 600px) {
-
-          .rf-shell {
-            width: min(100% - 24px, 1180px);
-          }
-
+          .rf-shell { width: min(100% - 24px, 1180px); }
           .rf-card {
             padding: 20px;
             border-radius: 24px;
           }
-
-          .rf-left h1 {
-            font-size: 42px;
-          }
-
-          .rf-info-grid {
-            grid-template-columns: 1fr;
-          }
-
+          .rf-left h1 { font-size: 42px; }
+          .rf-info-grid { grid-template-columns: 1fr; }
           .rf-detective {
-            transform:
-              translate(-50%, -70%)
-              scale(.78);
+            transform: translate(-50%, -76%) scale(.78);
           }
-
         }
 
         @media (prefers-reduced-motion: reduce) {
-
           .rf-detective,
-          .rf-eye,
           .rf-eye i {
             animation: none !important;
           }
-
         }
-
       `}</style>
     </main>
   );
