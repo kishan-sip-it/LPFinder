@@ -1,10 +1,5 @@
-import HomeClient from "@/components/HomeClient";
-import { AuthProvider } from "@/components/AuthProvider";
+import LandingPage from "@/components/LandingPage";
 
 export default function Page() {
-  return (
-    <AuthProvider>
-      <HomeClient />
-    </AuthProvider>
-  );
+  return <LandingPage />;
 }
