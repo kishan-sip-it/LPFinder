@@ -50,7 +50,7 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
+    <div className="auth-theme min-h-screen grid lg:grid-cols-2">
       {/* Left / hero */}
       <div className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 p-12 text-white">
         <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />

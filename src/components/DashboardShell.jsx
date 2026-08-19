@@ -40,7 +40,7 @@ export default function DashboardShell({ children }) {
     href === "/dashboard" ? pathname === href : pathname.startsWith(href);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-violet-50 to-fuchsia-100 lg:grid lg:grid-cols-[260px_1fr]">
+    <div className="dashboard-theme min-h-screen bg-gradient-to-br from-indigo-100 via-violet-50 to-fuchsia-100 lg:grid lg:grid-cols-[260px_1fr]">
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 w-64 transform border-r border-slate-200 bg-white transition-transform lg:static lg:translate-x-0 ${

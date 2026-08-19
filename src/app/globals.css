@@ -1,283 +1,289 @@
 @import "tailwindcss";
 
 /* =========================================================
-   REUNITEFIND — FULL DASHBOARD VISUAL THEME
-   Login page intentionally untouched.
-   Palette: deep black + indigo + hallmark purple + sunset purple.
+   REUNITEFIND THEME
+   Palette:
+   - Deep black
+   - Indigo
+   - Royal / hallmark purple
+   - Sunset purple / magenta
    ========================================================= */
 
-body:has(aside) {
-  background:
-    radial-gradient(circle at 8% 8%, rgba(99, 102, 241, 0.38), transparent 28%),
-    radial-gradient(circle at 92% 12%, rgba(168, 85, 247, 0.30), transparent 30%),
-    radial-gradient(circle at 78% 92%, rgba(236, 72, 153, 0.20), transparent 30%),
-    linear-gradient(135deg, #050509 0%, #0f1024 35%, #1c1230 68%, #09070d 100%);
+/* =========================
+   GLOBAL BASE
+   ========================= */
+
+html,
+body {
+  min-height: 100%;
+}
+
+/* =========================
+   AUTH / LOGIN / REGISTER
+   ========================= */
+
+.auth-theme {
+  min-height: 100vh;
   color: #f8fafc;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(99, 102, 241, 0.38), transparent 28%),
+    radial-gradient(circle at 92% 10%, rgba(168, 85, 247, 0.30), transparent 30%),
+    radial-gradient(circle at 76% 88%, rgba(236, 72, 153, 0.20), transparent 32%),
+    linear-gradient(135deg, #050509 0%, #101126 35%, #201136 68%, #09070d 100%);
+}
+
+.auth-theme > div:first-child {
+  background:
+    linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(124, 58, 237, 0.90) 52%, rgba(168, 85, 247, 0.88)) !important;
+}
+
+.auth-theme .bg-slate-50 {
+  background: transparent !important;
+}
+
+.auth-theme .bg-white {
+  background:
+    linear-gradient(145deg, rgba(29, 30, 52, 0.95), rgba(12, 13, 23, 0.97)) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+}
+
+.auth-theme .text-slate-500,
+.auth-theme .text-slate-600 {
+  color: #b8bbcf !important;
+}
+
+.auth-theme input {
+  color: #f8fafc !important;
+  background: rgba(5, 6, 12, 0.70) !important;
+  border-color: rgba(139, 92, 246, 0.30) !important;
+}
+
+.auth-theme input::placeholder {
+  color: #898da2 !important;
+}
+
+.auth-theme input:focus {
+  border-color: #a78bfa !important;
+  background: rgba(8, 9, 17, 0.90) !important;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15) !important;
+}
+
+.auth-theme .bg-indigo-600 {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed 55%, #a855f7) !important;
+  box-shadow:
+    0 14px 30px rgba(99, 102, 241, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.auth-theme button.border-slate-300 {
+  color: #e1e2ee !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(139, 92, 246, 0.30) !important;
+}
+
+.auth-theme button.border-slate-300:hover {
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+.auth-theme .text-indigo-600 {
+  color: #c4b5fd !important;
+}
+
+/* =========================
+   DASHBOARD
+   ========================= */
+
+.dashboard-theme {
+  min-height: 100vh;
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(99, 102, 241, 0.36), transparent 28%),
+    radial-gradient(circle at 94% 14%, rgba(168, 85, 247, 0.28), transparent 30%),
+    radial-gradient(circle at 76% 92%, rgba(236, 72, 153, 0.18), transparent 30%),
+    linear-gradient(135deg, #050509 0%, #0e1024 36%, #1e1234 68%, #09070d 100%) !important;
 }
 
 /* Sidebar */
-body:has(aside) aside {
+.dashboard-theme aside {
   background:
-    linear-gradient(180deg, #17172f 0%, #0a0a12 55%, #1a0d25 100%) !important;
-  border-right: 1px solid rgba(139, 92, 246, 0.34) !important;
-  box-shadow: 16px 0 50px rgba(0, 0, 0, 0.35);
+    linear-gradient(180deg, #17172f 0%, #090a12 56%, #1a0d24 100%) !important;
+  border-color: rgba(139, 92, 246, 0.30) !important;
+  box-shadow: 16px 0 48px rgba(0, 0, 0, 0.34);
 }
 
-body:has(aside) aside .bg-indigo-600 {
+.dashboard-theme aside .bg-indigo-600 {
   background: linear-gradient(135deg, #4f46e5, #7c3aed 55%, #c084fc) !important;
   box-shadow: 0 10px 28px rgba(124, 58, 237, 0.34);
 }
 
-body:has(aside) aside .text-lg.font-bold,
-body:has(aside) aside .text-sm.font-semibold.text-slate-800 {
+.dashboard-theme aside .text-lg.font-bold {
   color: #ffffff !important;
 }
 
-body:has(aside) aside .text-slate-500,
-body:has(aside) aside .text-slate-600 {
-  color: #a9adc4 !important;
+.dashboard-theme aside .text-slate-500,
+.dashboard-theme aside .text-slate-600 {
+  color: #aeb2c7 !important;
 }
 
-body:has(aside) aside .border-t,
-body:has(aside) aside .border-r {
-  border-color: rgba(139, 92, 246, 0.20) !important;
-}
-
-body:has(aside) aside nav a {
+.dashboard-theme aside nav a {
   color: #b9bbcf !important;
   border: 1px solid transparent;
   transition: all 180ms ease;
 }
 
-body:has(aside) aside nav a:hover {
+.dashboard-theme aside nav a:hover {
   color: #ffffff !important;
-  background: linear-gradient(90deg, rgba(99,102,241,.20), rgba(168,85,247,.13)) !important;
-  border-color: rgba(139,92,246,.28);
+  background:
+    linear-gradient(90deg, rgba(99, 102, 241, 0.22), rgba(168, 85, 247, 0.13)) !important;
+  border-color: rgba(139, 92, 246, 0.26);
   transform: translateX(2px);
 }
 
-body:has(aside) aside nav a.bg-indigo-50 {
+.dashboard-theme aside nav a.bg-indigo-50 {
   color: #ffffff !important;
-  background: linear-gradient(90deg, rgba(99,102,241,.62), rgba(139,92,246,.34)) !important;
-  border-color: rgba(167,139,250,.34);
-  box-shadow: inset 3px 0 0 #c4b5fd, 0 8px 25px rgba(79,70,229,.22);
-}
-
-body:has(aside) aside button {
-  color: #d9daea !important;
-  border-color: rgba(139,92,246,.28) !important;
-  background: rgba(255,255,255,.04) !important;
-}
-
-body:has(aside) aside button:hover {
-  color: #ffffff !important;
-  border-color: rgba(192,132,252,.48) !important;
-  background: rgba(139,92,246,.14) !important;
-}
-
-/* Main canvas */
-body:has(aside) main {
   background:
-    radial-gradient(circle at 15% 0%, rgba(99,102,241,.19), transparent 33%),
-    radial-gradient(circle at 92% 20%, rgba(168,85,247,.14), transparent 30%),
-    transparent !important;
+    linear-gradient(90deg, rgba(99, 102, 241, 0.62), rgba(139, 92, 246, 0.34)) !important;
+  border-color: rgba(167, 139, 250, 0.34);
+  box-shadow:
+    inset 3px 0 0 #c4b5fd,
+    0 8px 24px rgba(79, 70, 229, 0.22);
 }
 
-body:has(aside) main h1,
-body:has(aside) main h2,
-body:has(aside) main h3 {
+/* Main dashboard area */
+.dashboard-theme main {
+  background:
+    radial-gradient(circle at 14% 0%, rgba(99, 102, 241, 0.18), transparent 32%),
+    radial-gradient(circle at 92% 18%, rgba(168, 85, 247, 0.13), transparent 30%) !important;
+}
+
+.dashboard-theme main h1,
+.dashboard-theme main h2,
+.dashboard-theme main h3 {
   color: #f8fafc !important;
 }
 
-body:has(aside) main .text-slate-500 {
+.dashboard-theme main .text-slate-500 {
   color: #aeb2c7 !important;
 }
 
-body:has(aside) main .text-slate-600 {
+.dashboard-theme main .text-slate-600 {
   color: #c8cada !important;
 }
 
-body:has(aside) main .text-slate-700,
-body:has(aside) main .text-slate-800 {
-  color: #f2f3f7 !important;
+.dashboard-theme main .text-slate-700,
+.dashboard-theme main .text-slate-800 {
+  color: #f3f4f8 !important;
 }
 
-/* All main cards */
-body:has(aside) main .bg-white {
+/* Cards */
+.dashboard-theme main .bg-white {
   background:
-    linear-gradient(145deg, rgba(31,32,57,.94), rgba(13,14,25,.95)) !important;
-  border-color: rgba(139,92,246,.25) !important;
+    linear-gradient(145deg, rgba(30, 31, 56, 0.94), rgba(13, 14, 25, 0.96)) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
   box-shadow:
-    0 18px 42px rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.05);
+    0 18px 42px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
 }
 
-body:has(aside) main .bg-white:hover {
-  border-color: rgba(167,139,250,.44) !important;
+.dashboard-theme main .bg-white:hover {
+  border-color: rgba(167, 139, 250, 0.42) !important;
   box-shadow:
-    0 22px 52px rgba(0,0,0,.34),
-    0 0 0 1px rgba(139,92,246,.08);
+    0 22px 50px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(139, 92, 246, 0.08);
 }
 
-/* Slate surfaces */
-body:has(aside) main .bg-slate-50,
-body:has(aside) main .bg-slate-100 {
-  background: linear-gradient(145deg, rgba(44,45,72,.78), rgba(20,20,34,.84)) !important;
+/* Secondary slate surfaces */
+.dashboard-theme main .bg-slate-50,
+.dashboard-theme main .bg-slate-100 {
+  background:
+    linear-gradient(145deg, rgba(44, 45, 72, 0.78), rgba(20, 20, 34, 0.84)) !important;
   color: #f4f4fa !important;
 }
 
-/* Primary indigo / purple buttons */
-body:has(aside) main .bg-indigo-600 {
+/* Primary buttons */
+.dashboard-theme main .bg-indigo-600 {
   background: linear-gradient(135deg, #4f46e5, #7c3aed 55%, #a855f7) !important;
-  border: 1px solid rgba(196,181,253,.18);
+  border-color: rgba(196, 181, 253, 0.18) !important;
   box-shadow:
-    0 12px 28px rgba(99,102,241,.26),
-    inset 0 1px 0 rgba(255,255,255,.12);
+    0 12px 28px rgba(99, 102, 241, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-body:has(aside) main .bg-indigo-600:hover {
+.dashboard-theme main .bg-indigo-600:hover {
   background: linear-gradient(135deg, #4338ca, #6d28d9 55%, #9333ea) !important;
   transform: translateY(-1px);
 }
 
-/* Stat gradients */
-body:has(aside) main .from-indigo-500 {
-  --tw-gradient-from: #6366f1 !important;
-}
-body:has(aside) main .to-violet-500 {
-  --tw-gradient-to: #a855f7 !important;
-}
-body:has(aside) main .from-rose-500 {
-  --tw-gradient-from: #f43f5e !important;
-}
-body:has(aside) main .to-pink-500 {
-  --tw-gradient-to: #db2777 !important;
-}
-body:has(aside) main .from-amber-500 {
-  --tw-gradient-from: #f59e0b !important;
-}
-body:has(aside) main .to-orange-500 {
-  --tw-gradient-to: #f97316 !important;
-}
-body:has(aside) main .from-emerald-500 {
-  --tw-gradient-from: #10b981 !important;
-}
-body:has(aside) main .to-teal-500 {
-  --tw-gradient-to: #0f766e !important;
-}
-
-/* Filters */
-body:has(aside) main button.bg-white {
-  color: #c9cbdd !important;
-  background: rgba(255,255,255,.05) !important;
-  border-color: rgba(139,92,246,.24) !important;
-}
-
-body:has(aside) main button.bg-white:hover {
-  color: #ffffff !important;
-  background: rgba(139,92,246,.14) !important;
-  border-color: rgba(167,139,250,.38) !important;
-}
-
-body:has(aside) main button {
-  transition: all 160ms ease;
-}
-
-/* Inputs/forms */
-body:has(aside) main input,
-body:has(aside) main textarea,
-body:has(aside) main select {
+/* Inputs */
+.dashboard-theme main input,
+.dashboard-theme main textarea,
+.dashboard-theme main select {
   color: #f8fafc !important;
-  background: rgba(7,8,14,.62) !important;
-  border-color: rgba(139,92,246,.30) !important;
+  background: rgba(7, 8, 14, 0.62) !important;
+  border-color: rgba(139, 92, 246, 0.30) !important;
 }
 
-body:has(aside) main input::placeholder,
-body:has(aside) main textarea::placeholder {
+.dashboard-theme main input::placeholder,
+.dashboard-theme main textarea::placeholder {
   color: #8d91a7 !important;
 }
 
-body:has(aside) main input:focus,
-body:has(aside) main textarea:focus,
-body:has(aside) main select:focus {
+.dashboard-theme main input:focus,
+.dashboard-theme main textarea:focus,
+.dashboard-theme main select:focus {
   border-color: #8b5cf6 !important;
-  box-shadow: 0 0 0 4px rgba(139,92,246,.15) !important;
-  background: rgba(11,12,22,.84) !important;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15) !important;
 }
 
 /* Report rows */
-body:has(aside) main li > a:hover {
-  background: linear-gradient(90deg, rgba(99,102,241,.14), rgba(168,85,247,.08)) !important;
+.dashboard-theme main li > a:hover {
+  background:
+    linear-gradient(90deg, rgba(99, 102, 241, 0.14), rgba(168, 85, 247, 0.08)) !important;
 }
 
-body:has(aside) main .divide-y > * + * {
-  border-color: rgba(139,92,246,.14) !important;
+.dashboard-theme main .divide-y > * + * {
+  border-color: rgba(139, 92, 246, 0.14) !important;
 }
 
-/* Status badges */
-body:has(aside) main .bg-rose-50 {
-  background: rgba(244,63,94,.13) !important;
+/* Status */
+.dashboard-theme main .bg-rose-50 {
+  background: rgba(244, 63, 94, 0.13) !important;
   color: #fda4af !important;
-  box-shadow: inset 0 0 0 1px rgba(244,63,94,.20);
 }
 
-body:has(aside) main .bg-amber-50 {
-  background: rgba(245,158,11,.13) !important;
+.dashboard-theme main .bg-amber-50 {
+  background: rgba(245, 158, 11, 0.13) !important;
   color: #fcd34d !important;
-  box-shadow: inset 0 0 0 1px rgba(245,158,11,.20);
 }
 
-body:has(aside) main .bg-emerald-50 {
-  background: rgba(16,185,129,.13) !important;
+.dashboard-theme main .bg-emerald-50 {
+  background: rgba(16, 185, 129, 0.13) !important;
   color: #6ee7b7 !important;
-  box-shadow: inset 0 0 0 1px rgba(16,185,129,.20);
 }
 
-/* Borders/dividers */
-body:has(aside) main .border-slate-200,
-body:has(aside) main .border-slate-300 {
-  border-color: rgba(139,92,246,.20) !important;
-}
-
-/* Purple links */
-body:has(aside) main .text-indigo-600,
-body:has(aside) main a.text-indigo-600 {
-  color: #b39afb !important;
-}
-
-body:has(aside) main a.text-indigo-600:hover {
-  color: #e0c7ff !important;
-}
-
-/* Mobile dashboard header */
-body:has(aside) header.lg\:hidden {
-  background: rgba(8,8,15,.86) !important;
-  border-color: rgba(139,92,246,.28) !important;
-  backdrop-filter: blur(16px);
+/* Dividers */
+.dashboard-theme main .border-slate-200,
+.dashboard-theme main .border-slate-300 {
+  border-color: rgba(139, 92, 246, 0.20) !important;
 }
 
 /* Scrollbar */
-body:has(aside) ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-body:has(aside) ::-webkit-scrollbar-track {
+
+::-webkit-scrollbar-track {
   background: #07070c;
 }
-body:has(aside) ::-webkit-scrollbar-thumb {
+
+::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #6366f1, #8b5cf6, #c084fc);
   border-radius: 999px;
   border: 2px solid #07070c;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  body:has(aside) *,
-  body:has(aside) *::before,
-  body:has(aside) *::after {
-    transition: none !important;
-    animation: none !important;
-    scroll-behavior: auto !important;
-  }
 }
