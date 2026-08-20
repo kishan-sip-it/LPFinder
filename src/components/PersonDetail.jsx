@@ -135,27 +135,30 @@ export default function PersonDetail({ personId }) {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Update status
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {STATUSES.map((s) => (
-                <button
-                  key={s.key}
-                  disabled={savingStatus}
-                  onClick={() => updateStatus(s.key)}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${
-                    person.status === s.key
-                      ? "bg-indigo-600 text-white"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
+          {user?.role === "admin" && (
+            <div className="rounded-2xl border border-slate-200 bg-white p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Update status
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {STATUSES.map((s) => (
+                  <button
+                    key={s.key}
+                    disabled={savingStatus}
+                    onClick={() => updateStatus(s.key)}
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${
+                      person.status === s.key
+                        ? "bg-indigo-600 text-white"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {canManage && (
             <div className="flex gap-2">
