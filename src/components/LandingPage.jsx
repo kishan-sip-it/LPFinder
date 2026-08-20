@@ -636,7 +636,7 @@ export default function LandingPage() {
        position: absolute;
      
        left: 50%;
-       top: 78px;
+       top: 108px;
      
        width: 15px;
        height: 15px;
@@ -654,7 +654,7 @@ export default function LandingPage() {
        position: absolute;
      
        left: 50%;
-       top: 88px;
+       top: 118px;
      
        width: 92px;
        height: 72px;
