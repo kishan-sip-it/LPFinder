@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAuth } from "./AuthProvider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import StatusBadge from "./StatusBadge";
@@ -13,6 +14,8 @@ const STATUSES = [
 
 export default function PersonDetail({ personId }) {
   const router = useRouter();
+  const { user } = useAuth();
+  const canManage = user?.role === "admin" || user?.role === "reporter";
   const [person, setPerson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -154,26 +157,31 @@ export default function PersonDetail({ personId }) {
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <Link
-              href={`/dashboard/persons/${person.id}/edit`}
-              className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-center font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-              ✏️ Edit
-            </Link>
-            <button
-              onClick={() => setConfirming(true)}
-              className="flex-1 rounded-xl border border-rose-200 px-4 py-2.5 font-semibold text-rose-600 transition hover:bg-rose-50"
-            >
-              🗑️ Delete
-            </button>
-          </div>
+          {canManage && (
+            <div className="flex gap-2">
+              <Link
+                href={`/dashboard/persons/${person.id}/edit`}
+                className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-center font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                ✏️ Edit
+              </Link>
+
+              <button
+                onClick={() => setConfirming(true)}
+                className="flex-1 rounded-xl border border-rose-200 px-4 py-2.5 font-semibold text-rose-600 transition hover:bg-rose-50"
+              >
+                🗑️ Delete
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="space-y-6">
           <div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight">{person.fullName}</h1>
+              <h1 className="text-2xl font-bold tracking-tight">
+                {person.fullName}
+              </h1>
               <StatusBadge status={person.status} />
             </div>
             <p className="mt-1 text-slate-500">
@@ -209,8 +217,8 @@ export default function PersonDetail({ personId }) {
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
             <h3 className="text-lg font-bold">Delete this report?</h3>
             <p className="mt-1 text-sm text-slate-500">
-              This will permanently remove {person.fullName}&apos;s record. This cannot
-              be undone.
+              This will permanently remove {person.fullName}&apos;s record. This
+              cannot be undone.
             </p>
             <div className="mt-5 flex justify-end gap-3">
               <button
