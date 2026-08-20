@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthProvider";
 import CameraCapture from "./CameraCapture";
 
 const EMPTY = {
@@ -25,10 +26,12 @@ const EMPTY = {
 
 export default function PersonForm({ initial = null, personId = null }) {
   const router = useRouter();
+  const { user } = useAuth();
   const [form, setForm] = useState({ ...EMPTY, ...(initial || {}) });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const isEdit = Boolean(personId);
+  const canChangeStatus = user?.role === "admin";
 
   const set = (k) => (e) =>
     setForm((f) => ({ ...f, [k]: e.target ? e.target.value : e }));
@@ -80,7 +83,6 @@ export default function PersonForm({ initial = null, personId = null }) {
       )}
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        {/* Photo */}
         <Section title="Photo" subtitle="Camera or upload">
           <CameraCapture
             value={form.photoUrl}
@@ -89,7 +91,6 @@ export default function PersonForm({ initial = null, personId = null }) {
         </Section>
 
         <div className="space-y-6">
-          {/* Identity */}
           <Section title="Identity" subtitle="Who is missing">
             <div className="grid gap-4 sm:grid-cols-2">
               <Input label="Full name *" value={form.fullName} onChange={set("fullName")} />
@@ -100,15 +101,17 @@ export default function PersonForm({ initial = null, personId = null }) {
                 onChange={set("gender")}
                 options={["", "Male", "Female", "Other"]}
               />
-              <Input label="Height" value={form.height} onChange={set("height")} placeholder="e.g. 5'6&quot;" />
+              <Input label="Height" value={form.height} onChange={set("height")} placeholder="e.g. 5'6\"" />
               <Input label="Complexion" value={form.complexion} onChange={set("complexion")} />
-              <Select
-                label="Case status"
-                value={form.status}
-                onChange={set("status")}
-                options={["missing", "investigating", "found"]}
-                labels={{ missing: "Missing", investigating: "Investigating", found: "Found" }}
-              />
+              {canChangeStatus && (
+                <Select
+                  label="Case status"
+                  value={form.status}
+                  onChange={set("status")}
+                  options={["missing", "investigating", "found"]}
+                  labels={{ missing: "Missing", investigating: "Investigating", found: "Found" }}
+                />
+              )}
             </div>
             <Textarea
               label="Identifying marks"
@@ -118,7 +121,6 @@ export default function PersonForm({ initial = null, personId = null }) {
             />
           </Section>
 
-          {/* Last seen */}
           <Section title="Last seen" subtitle="When & where">
             <div className="grid gap-4 sm:grid-cols-2">
               <Input
@@ -147,7 +149,6 @@ export default function PersonForm({ initial = null, personId = null }) {
             />
           </Section>
 
-          {/* Informer */}
           <Section title="Informer" subtitle="Contact details">
             <div className="grid gap-4 sm:grid-cols-2">
               <Input label="Your name" value={form.reporterName} onChange={set("reporterName")} />
