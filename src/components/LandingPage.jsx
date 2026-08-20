@@ -829,57 +829,158 @@ export default function LandingPage() {
      /* actual pulling motion */
      
      @keyframes rf-arm-pull {
-     
-       0%,
-       12% {
-         transform:
-           translateY(16px)
-           rotate(24deg);
-       }
-     
-       28%,
-       58% {
-         transform:
-           translateY(0)
-           rotate(17deg);
-       }
-     
-       72%,
-       100% {
-         transform:
-           translateY(16px)
-           rotate(24deg);
-       }
-     }
-     
-     .rf-arm-right {
-       animation-name: rf-arm-pull-right;
-     }
-     
-     @keyframes rf-arm-pull-right {
-     
-       0%,
-       12% {
-         transform:
-           translateY(16px)
-           rotate(-24deg);
-       }
-     
-       28%,
-       58% {
-         transform:
-           translateY(0)
-           rotate(-17deg);
-       }
-     
-       72%,
-       100% {
-         transform:
-           translateY(16px)
-           rotate(-24deg);
-       }
-     }
-     
+
+  /* hidden */
+  0%,
+  10% {
+    transform:
+      translateY(16px)
+      rotate(24deg);
+  }
+
+  /* pull up with TOP peek */
+  18%,
+  22% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* hold while eyes scan */
+  22%,
+  40% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* retreat */
+  48% {
+    transform:
+      translateY(16px)
+      rotate(24deg);
+  }
+
+  /* pull up with RIGHT peek */
+  58%,
+  63% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* hold */
+  63%,
+  72% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* retreat */
+  77% {
+    transform:
+      translateY(16px)
+      rotate(24deg);
+  }
+
+  /* pull up with LEFT peek */
+  84%,
+  89% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* hold */
+  89%,
+  95% {
+    transform:
+      translateY(0)
+      rotate(17deg);
+  }
+
+  /* retreat */
+  100% {
+    transform:
+      translateY(16px)
+      rotate(24deg);
+  }
+}
+
+.rf-arm-right {
+  animation-name: rf-arm-pull-right;
+}
+
+@keyframes rf-arm-pull-right {
+
+  0%,
+  10% {
+    transform:
+      translateY(16px)
+      rotate(-24deg);
+  }
+
+  18%,
+  22% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  22%,
+  40% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  48% {
+    transform:
+      translateY(16px)
+      rotate(-24deg);
+  }
+
+  58%,
+  63% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  63%,
+  72% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  77% {
+    transform:
+      translateY(16px)
+      rotate(-24deg);
+  }
+
+  84%,
+  89% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  89%,
+  95% {
+    transform:
+      translateY(0)
+      rotate(-17deg);
+  }
+
+  100% {
+    transform:
+      translateY(16px)
+      rotate(-24deg);
+  }
+}
      /* ---------------- HAT ---------------- */
      
      .rf-hat {
@@ -1161,9 +1262,8 @@ export default function LandingPage() {
           }
 
           .rf-detective {
-            transform:
-              translate(-50%, -92%)
-              scale(0.78);
+      
+              scale: 0.78;
           }
         }
 

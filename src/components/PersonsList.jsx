@@ -11,7 +11,10 @@ const FILTERS = [
   { key: "found", label: "Found" },
 ];
 
-export default function PersonsList() {
+export default function PersonsList({
+  title = "Reports",
+  description = "All missing person cases you have reported.",
+}) {
   const [persons, setPersons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
@@ -42,10 +45,8 @@ export default function PersonsList() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Reports</h1>
-          <p className="mt-1 text-slate-500">
-            All missing person cases you have reported.
-          </p>
+        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+        <p className="mt-1 text-slate-500">{description}</p>
         </div>
         <Link
           href="/dashboard/persons/new"
