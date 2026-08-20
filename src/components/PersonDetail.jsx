@@ -15,24 +15,42 @@ const STATUSES = [
 export default function PersonDetail({ personId }) {
   const router = useRouter();
   const { user } = useAuth();
-  const canManage = user?.role === "admin" || user?.role === "reporter";
   const [person, setPerson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [forbidden, setForbidden] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [savingStatus, setSavingStatus] = useState(false);
+
+  const canManage =
+    user?.role === "admin" ||
+    (user?.role === "reporter" && person?.userId === user?.id);
 
   useEffect(() => {
     let active = true;
     (async () => {
       const res = await fetch(`/api/persons/${personId}`);
       if (!active) return;
+
+      if (res.status === 403) {
+        setForbidden(true);
+        setLoading(false);
+        return;
+      }
+
       if (res.status === 404) {
         setNotFound(true);
         setLoading(false);
         return;
       }
+
+      if (!res.ok) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
+
       const data = await res.json();
       setPerson(data.person);
       setLoading(false);
@@ -43,9 +61,8 @@ export default function PersonDetail({ personId }) {
   }, [personId]);
 
   const updateStatus = async (status) => {
-    if (!person || status === person.status) return;
+    if (!person || status === person.status || user?.role !== "admin") return;
     const prev = person.status;
-    // optimistic update
     setPerson((p) => ({ ...p, status }));
     setSavingStatus(true);
     try {
@@ -56,7 +73,7 @@ export default function PersonDetail({ personId }) {
       });
       if (!res.ok) throw new Error();
     } catch {
-      setPerson((p) => ({ ...p, status: prev })); // rollback
+      setPerson((p) => ({ ...p, status: prev }));
     } finally {
       setSavingStatus(false);
     }
@@ -65,7 +82,11 @@ export default function PersonDetail({ personId }) {
   const remove = async () => {
     setDeleting(true);
     try {
-      await fetch(`/api/persons/${personId}`, { method: "DELETE" });
+      const res = await fetch(`/api/persons/${personId}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to delete report.");
+      }
       router.push("/dashboard/persons");
       router.refresh();
     } catch {
@@ -85,6 +106,24 @@ export default function PersonDetail({ personId }) {
             ))}
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (forbidden) {
+    return (
+      <div className="mx-auto max-w-md py-20 text-center">
+        <div className="text-5xl">🔒</div>
+        <h2 className="mt-4 text-xl font-bold">Access denied</h2>
+        <p className="mt-1 text-slate-500">
+          This report does not belong to your account.
+        </p>
+        <Link
+          href="/dashboard/persons"
+          className="mt-6 inline-block rounded-xl bg-indigo-600 px-5 py-2.5 font-semibold text-white"
+        >
+          Back to reports
+        </Link>
       </div>
     );
   }
