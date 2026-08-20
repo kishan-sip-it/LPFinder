@@ -557,460 +557,536 @@ export default function LandingPage() {
         }
 
         /* =========================================================
-   DETECTIVE — BITMOJI STYLE PEEK
-   IMPORTANT:
-   - Detective stays BEHIND the card
-   - Hands help pull it upward
-   - Slow rise
-   - Eye scan happens while visible
-   - Slow descent
-   - No floating / no random-angle jumps
-   ========================================================= */
-
-.rf-detective {
-  position: absolute;
-  z-index: 2;
-
-  left: 50%;
-  top: 0;
-
-  width: 300px;
-  height: 235px;
-
-  transform: translate(-50%, -92%);
-  transform-origin: 50% 100%;
-
-  pointer-events: none;
-
-  animation:
-    rf-bitmoji-peek
-    7.5s
-    ease-in-out
-    infinite;
-}
-
-/* robot container */
-.rf-robot {
-  position: absolute;
-
-  left: 50%;
-  bottom: 0;
-
-  width: 150px;
-  height: 175px;
-
-  transform: translateX(-50%);
-}
-
-/* serious robotic head */
-.rf-head {
-  position: absolute;
-
-  left: 50%;
-  top: 36px;
-
-  width: 94px;
-  height: 74px;
-
-  transform: translateX(-50%);
-
-  border-radius: 28px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #0d0d14,
-      #020205
-    );
-
-  border: 1px solid rgba(255,255,255,.045);
-
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.55);
-}
-
-/* robot neck */
-.rf-neck {
-  position: absolute;
-
-  left: 50%;
-  top: 103px;
-
-  width: 22px;
-  height: 22px;
-
-  transform: translateX(-50%);
-
-  border-radius: 7px;
-
-  background: #08080d;
-}
-
-/* robot body */
-.rf-body {
-  position: absolute;
-
-  left: 50%;
-  top: 116px;
-
-  width: 122px;
-  height: 92px;
-
-  transform: translateX(-50%);
-
-  border-radius:
-    28px 28px 12px 12px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #11111b,
-      #030305
-    );
-
-  box-shadow:
-    0 18px 28px rgba(0,0,0,.55);
-}
-
-/* =========================================================
-   EYES
-   BOTH EYES ALWAYS MOVE TOGETHER
-   ========================================================= */
-
-.rf-eye {
-  position: absolute;
-
-  top: 30px;
-
-  width: 9px;
-  height: 9px;
-
-  border-radius: 50%;
-
-  background: #ff1737;
-
-  box-shadow:
-    0 0 10px rgba(255,23,55,.95),
-    0 0 23px rgba(255,23,55,.4);
-}
-
-.rf-eye-left {
-  left: 23px;
-}
-
-.rf-eye-right {
-  right: 23px;
-}
-
-.rf-eye i {
-  position: absolute;
-
-  top: 2px;
-  left: 2px;
-
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-
-  background: #350207;
-
-  animation:
-    rf-eye-together
-    2.2s
-    ease-in-out
-    infinite;
-}
-
-/* same exact motion for both eyes */
-.rf-eye-left i,
-.rf-eye-right i {
-  animation-name: rf-eye-together;
-}
-
-@keyframes rf-eye-together {
-
-  0%,
-  10% {
-    left: 2px;
-  }
-
-  22%,
-  34% {
-    left: 5px;
-  }
-
-  46%,
-  58% {
-    left: 2px;
-  }
-
-  70%,
-  82% {
-    left: 5px;
-  }
-
-  94%,
-  100% {
-    left: 2px;
-  }
-}
-
-/* =========================================================
-   ARMS + HANDS
-   Hands appear to hold the card edge during the peek
-   ========================================================= */
-
-.rf-arm {
-  position: absolute;
-
-  bottom: 48px;
-
-  width: 40px;
-  height: 108px;
-
-  border-radius: 30px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #151520,
-      #050507
-    );
-
-  z-index: 3;
-}
-
-/* left hand/arm */
-.rf-arm-left {
-  left: 22px;
-
-  transform-origin:
-    50% 100%;
-
-  transform: rotate(20deg);
-}
-
-/* right hand/arm */
-.rf-arm-right {
-  right: 22px;
-
-  transform-origin:
-    50% 100%;
-
-  transform: rotate(-20deg);
-}
-
-.rf-hand {
-  position: absolute;
-
-  width: 29px;
-  height: 29px;
-
-  bottom: -6px;
-
-  border-radius:
-    10px 10px 14px 14px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #20202c,
-      #07070b
-    );
-
-  box-shadow:
-    0 5px 10px rgba(0,0,0,.5);
-}
-
-.rf-arm-left .rf-hand {
-  left: 4px;
-}
-
-.rf-arm-right .rf-hand {
-  right: 4px;
-}
-
-/* =========================================================
-   HAT
-   ========================================================= */
-
-.rf-hat {
-  position: absolute;
-
-  left: 50%;
-  top: 0;
-
-  width: 180px;
-  height: 70px;
-
-  transform:
-    translateX(-50%)
-    rotate(-3deg);
-
-  z-index: 8;
-}
-
-.rf-hat-crown {
-  position: absolute;
-
-  left: 50%;
-  bottom: 20px;
-
-  width: 78px;
-  height: 45px;
-
-  transform: translateX(-50%);
-
-  border-radius:
-    24px
-    24px
-    9px
-    9px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #191925,
-      #040407
-    );
-}
-
-.rf-hat-band {
-  position: absolute;
-
-  left: 50%;
-  bottom: 27px;
-
-  width: 74px;
-  height: 6px;
-
-  transform: translateX(-50%);
-
-  background:
-    linear-gradient(
-      90deg,
-      #312e81,
-      #a855f7,
-      #312e81
-    );
-}
-
-.rf-hat-brim {
-  position: absolute;
-
-  left: 50%;
-  bottom: 10px;
-
-  width: 170px;
-  height: 18px;
-
-  transform: translateX(-50%);
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      180deg,
-      #181823,
-      #040407
-    );
-}
-
-/* =========================================================
-   MAGNIFIER
-   ========================================================= */
-
-.rf-magnifier {
-  position: absolute;
-
-  right: 8px;
-  top: 82px;
-
-  width: 74px;
-  height: 74px;
-
-  transform: rotate(-18deg);
-
-  z-index: 10;
-}
-
-.rf-glass {
-  position: absolute;
-
-  width: 52px;
-  height: 52px;
-
-  border:
-    6px solid #c4b5fd;
-
-  border-radius: 50%;
-
-  background:
-    rgba(129,140,248,.08);
-
-  box-shadow:
-    0 0 22px rgba(129,140,248,.22);
-}
-
-.rf-handle {
-  position: absolute;
-
-  left: 47px;
-  top: 46px;
-
-  width: 8px;
-  height: 34px;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #c4b5fd,
-      #7c3aed
-    );
-}
-
-/* =========================================================
-   MAIN BITMOJI MOVEMENT
-
-   0-18%  : completely hidden
-   18-32% : slowly rises
-   32-70% : stays up while eyes scan
-   70-86% : slowly goes down
-   86-100%: fully hidden
-   ========================================================= */
-
-@keyframes rf-bitmoji-peek {
-
-  0%,
-  12% {
-    transform:
-      translate(-50%, -94%);
-  }
-
-  28% {
-    transform:
-      translate(-50%, -30%);
-  }
-
-  62% {
-    transform:
-      translate(-50%, -30%);
-  }
-
-  82% {
-    transform:
-      translate(-50%, -94%);
-  }
-
-  100% {
-    transform:
-      translate(-50%, -94%);
-  }
-}
-        
+        DETECTIVE — SMALL BITMOJI STYLE PEEK
+        - Small head
+        - Only head + hat + hands are meant to show
+        - Body stays behind the card
+        - Hands actually pull upward during the peek
+        - Peek happens from top / left / right edges
+        - Slow rise -> eye scan -> slow retreat
+        ========================================================= */
+     
+     .rf-detective {
+       position: absolute;
+       z-index: 2;
+     
+       left: 50%;
+       top: 0;
+     
+       width: 220px;
+       height: 180px;
+     
+       transform: translate(-50%, -96%);
+       transform-origin: 50% 100%;
+     
+       pointer-events: none;
+     
+       animation:
+         rf-bitmoji-peek
+         9s
+         ease-in-out
+         infinite;
+     }
+     
+     /* ---------------- ROBOT BODY ---------------- */
+     
+     .rf-robot {
+       position: absolute;
+     
+       left: 50%;
+       bottom: -8px;
+     
+       width: 110px;
+       height: 135px;
+     
+       transform: translateX(-50%);
+     }
+     
+     /* head = the main visible element */
+     
+     .rf-head {
+       position: absolute;
+     
+       left: 50%;
+       top: 34px;
+     
+       width: 70px;
+       height: 56px;
+     
+       transform: translateX(-50%);
+     
+       border-radius: 20px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #0e0e15,
+           #020204
+         );
+     
+       border: 1px solid rgba(255,255,255,.045);
+     
+       box-shadow:
+         0 10px 20px rgba(0,0,0,.5);
+     }
+     
+     /* neck stays low / mostly hidden */
+     
+     .rf-neck {
+       position: absolute;
+     
+       left: 50%;
+       top: 78px;
+     
+       width: 15px;
+       height: 15px;
+     
+       transform: translateX(-50%);
+     
+       border-radius: 5px;
+     
+       background: #08080d;
+     }
+     
+     /* body is deliberately low so card hides it */
+     
+     .rf-body {
+       position: absolute;
+     
+       left: 50%;
+       top: 88px;
+     
+       width: 92px;
+       height: 72px;
+     
+       transform: translateX(-50%);
+     
+       border-radius: 24px 24px 8px 8px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #11111b,
+           #030305
+         );
+     
+       box-shadow:
+         0 14px 24px rgba(0,0,0,.5);
+     }
+     
+     /* ---------------- EYES ---------------- */
+     
+     .rf-eye {
+       position: absolute;
+     
+       top: 23px;
+     
+       width: 7px;
+       height: 7px;
+     
+       border-radius: 50%;
+     
+       background: #ff1737;
+     
+       box-shadow:
+         0 0 8px rgba(255,23,55,.95),
+         0 0 17px rgba(255,23,55,.4);
+     }
+     
+     .rf-eye-left {
+       left: 18px;
+     }
+     
+     .rf-eye-right {
+       right: 18px;
+     }
+     
+     .rf-eye i {
+       position: absolute;
+     
+       top: 1px;
+       left: 1px;
+     
+       width: 5px;
+       height: 5px;
+     
+       border-radius: 50%;
+     
+       background: #350207;
+     
+       animation:
+         rf-eye-together
+         2.1s
+         ease-in-out
+         infinite;
+     }
+     
+     /* BOTH eyes always move together */
+     
+     @keyframes rf-eye-together {
+     
+       0%,
+       12% {
+         left: 1px;
+       }
+     
+       28%,
+       42% {
+         left: 4px;
+       }
+     
+       55%,
+       68% {
+         left: 1px;
+       }
+     
+       80%,
+       92% {
+         left: 4px;
+       }
+     
+       100% {
+         left: 1px;
+       }
+     }
+     
+     /* ---------------- ARMS / HANDS ---------------- */
+     
+     /* arms start lower and pull upward */
+     
+     .rf-arm {
+       position: absolute;
+     
+       bottom: 32px;
+     
+       width: 28px;
+       height: 76px;
+     
+       border-radius: 20px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #171722,
+           #050507
+         );
+     
+       z-index: 4;
+     
+       animation:
+         rf-arm-pull
+         9s
+         ease-in-out
+         infinite;
+     }
+     
+     .rf-arm-left {
+       left: 16px;
+     
+       transform-origin: 50% 100%;
+       transform: rotate(24deg);
+     }
+     
+     .rf-arm-right {
+       right: 16px;
+     
+       transform-origin: 50% 100%;
+       transform: rotate(-24deg);
+     }
+     
+     /* hands grip the card */
+     
+     .rf-hand {
+       position: absolute;
+     
+       width: 20px;
+       height: 20px;
+     
+       bottom: -4px;
+     
+       border-radius:
+         8px 8px 11px 11px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #242431,
+           #07070b
+         );
+     
+       box-shadow:
+         0 4px 8px rgba(0,0,0,.45);
+     }
+     
+     .rf-arm-left .rf-hand {
+       left: 2px;
+     }
+     
+     .rf-arm-right .rf-hand {
+       right: 2px;
+     }
+     
+     /* actual pulling motion */
+     
+     @keyframes rf-arm-pull {
+     
+       0%,
+       12% {
+         transform:
+           translateY(16px)
+           rotate(24deg);
+       }
+     
+       28%,
+       58% {
+         transform:
+           translateY(0)
+           rotate(17deg);
+       }
+     
+       72%,
+       100% {
+         transform:
+           translateY(16px)
+           rotate(24deg);
+       }
+     }
+     
+     .rf-arm-right {
+       animation-name: rf-arm-pull-right;
+     }
+     
+     @keyframes rf-arm-pull-right {
+     
+       0%,
+       12% {
+         transform:
+           translateY(16px)
+           rotate(-24deg);
+       }
+     
+       28%,
+       58% {
+         transform:
+           translateY(0)
+           rotate(-17deg);
+       }
+     
+       72%,
+       100% {
+         transform:
+           translateY(16px)
+           rotate(-24deg);
+       }
+     }
+     
+     /* ---------------- HAT ---------------- */
+     
+     .rf-hat {
+       position: absolute;
+     
+       left: 50%;
+       top: 3px;
+     
+       width: 128px;
+       height: 52px;
+     
+       transform:
+         translateX(-50%)
+         rotate(-3deg);
+     
+       z-index: 8;
+     }
+     
+     .rf-hat-crown {
+       position: absolute;
+     
+       left: 50%;
+       bottom: 16px;
+     
+       width: 58px;
+       height: 32px;
+     
+       transform: translateX(-50%);
+     
+       border-radius:
+         18px
+         18px
+         7px
+         7px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #191925,
+           #040407
+         );
+     }
+     
+     .rf-hat-band {
+       position: absolute;
+     
+       left: 50%;
+       bottom: 21px;
+     
+       width: 56px;
+       height: 5px;
+     
+       transform: translateX(-50%);
+     
+       background:
+         linear-gradient(
+           90deg,
+           #312e81,
+           #a855f7,
+           #312e81
+         );
+     }
+     
+     .rf-hat-brim {
+       position: absolute;
+     
+       left: 50%;
+       bottom: 8px;
+     
+       width: 128px;
+       height: 14px;
+     
+       transform: translateX(-50%);
+     
+       border-radius: 50%;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #181823,
+           #040407
+         );
+     }
+     
+     /* ---------------- MAGNIFIER ---------------- */
+     
+     .rf-magnifier {
+       position: absolute;
+     
+       right: 10px;
+       top: 65px;
+     
+       width: 52px;
+       height: 52px;
+     
+       transform: rotate(-18deg);
+     
+       z-index: 10;
+     }
+     
+     .rf-glass {
+       position: absolute;
+     
+       width: 36px;
+       height: 36px;
+     
+       border:
+         4px solid #c4b5fd;
+     
+       border-radius: 50%;
+     
+       background:
+         rgba(129,140,248,.08);
+     
+       box-shadow:
+         0 0 16px rgba(129,140,248,.22);
+     }
+     
+     .rf-handle {
+       position: absolute;
+     
+       left: 32px;
+       top: 31px;
+     
+       width: 6px;
+       height: 25px;
+     
+       border-radius: 999px;
+     
+       background:
+         linear-gradient(
+           180deg,
+           #c4b5fd,
+           #7c3aed
+         );
+     }
+     
+     /* =========================================================
+        MAIN MOVEMENT
+     
+        TOP → hide → RIGHT EDGE → hide → LEFT EDGE → hide
+        ========================================================= */
+     
+     @keyframes rf-bitmoji-peek {
+     
+       /* hidden */
+       0%,
+       10% {
+         transform:
+           translate(-50%, -96%);
+       }
+     
+       /* rise from TOP */
+       18% {
+         transform:
+           translate(-50%, -36%);
+       }
+     
+       /* hold while eyes work */
+       22%,
+       40% {
+         transform:
+           translate(-50%, -36%);
+       }
+     
+       /* retreat */
+       48% {
+         transform:
+           translate(-50%, -96%);
+       }
+     
+       /* appear from RIGHT */
+       58% {
+         transform:
+           translate(32%, -52%);
+       }
+     
+       63%,
+       72% {
+         transform:
+           translate(32%, -52%);
+       }
+     
+       /* leave RIGHT */
+       77% {
+         transform:
+           translate(32%, -96%);
+       }
+     
+       /* appear from LEFT */
+       84% {
+         transform:
+           translate(-132%, -52%);
+       }
+     
+       89%,
+       95% {
+         transform:
+           translate(-132%, -52%);
+       }
+     
+       /* leave LEFT */
+       100% {
+         transform:
+           translate(-50%, -96%);
+       }
+     }
 
         .rf-glow {
           position: absolute;
