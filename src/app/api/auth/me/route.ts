@@ -1,11 +1,20 @@
-import { getSession } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const session = await getSession();
-  if (!session) return Response.json({ user: null });
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json({ user: null });
+  }
+
   return Response.json({
-    user: { id: session.userId, name: session.name, email: session.email },
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
   });
 }

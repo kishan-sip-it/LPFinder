@@ -1,18 +1,27 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { hashPassword, createSession } from "@/lib/auth";
+import { hashPassword, createSession, type UserRole } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+
     const name = String(body.name || "").trim();
-    const email = String(body.email || "").trim().toLowerCase();
+
+    const email = String(body.email || "")
+      .trim()
+      .toLowerCase();
+
     const password = String(body.password || "");
 
     if (!name || !email || !password) {
-      return Response.json({ error: "All fields are required." }, { status: 400 });
+      return Response.json(
+        { error: "All fields are required." },
+        { status: 400 }
+      );
     }
+
     if (password.length < 6) {
       return Response.json(
         { error: "Password must be at least 6 characters." },
@@ -25,6 +34,7 @@ export async function POST(req: Request) {
       .from(users)
       .where(eq(users.email, email))
       .limit(1);
+
     if (existing.length) {
       return Response.json(
         { error: "An account with this email already exists." },
@@ -33,18 +43,42 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await hashPassword(password);
+
+    // Public registration is always a reporter.
+    // Admin is never self-assignable.
+    const role: UserRole = "reporter";
+
     const [user] = await db
       .insert(users)
-      .values({ name, email, passwordHash })
+      .values({
+        name,
+        email,
+        passwordHash,
+        role,
+      })
       .returning();
 
-    await createSession({ userId: user.id, email: user.email, name: user.name });
+    await createSession({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      role,
+    });
 
     return Response.json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role,
+      },
     });
   } catch (e) {
     console.error(e);
-    return Response.json({ error: "Something went wrong." }, { status: 500 });
+
+    return Response.json(
+      { error: "Something went wrong." },
+      { status: 500 }
+    );
   }
 }
