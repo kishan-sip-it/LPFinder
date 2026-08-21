@@ -1,122 +1,253 @@
-# ReuniteFind — Find Lost People
+# LFPFinder / ReuniteFind
 
-ReuniteFind is a full-stack web application for reporting and tracking missing-person cases. It provides authentication, case CRUD, search/filtering, status tracking, camera/photo capture, a dashboard, and seeded demo data.
+A full-stack missing-person reporting and finding platform built with Next.js, React, TypeScript/JSX, PostgreSQL, Drizzle ORM, and cookie-based JWT authentication.
 
-## Stack
+The application is centered around two primary actions:
 
-- **Frontend:** React 19 components inside Next.js App Router
-- **Framework/runtime:** Next.js 16.2.6
-- **Styling:** Tailwind CSS 4
-- **Backend:** Next.js API routes (Node.js)
-- **Database:** PostgreSQL
-- **ORM:** Drizzle ORM
-- **Authentication:** bcryptjs + jose (HTTP-only JWT cookie)
+- **Report someone** — submit and manage a missing-person report.
+- **Looking for someone** — browse public reports and search for a person.
 
-## Requirements
+## Tech Stack
 
-- Node.js 20+ (Node 22 works)
-- PostgreSQL running locally
+- **Next.js 16.2.6** — App Router
+- **React 19.2.6**
+- **TypeScript 5.9.3**
+- **PostgreSQL**
+- **Drizzle ORM 0.45.2**
+- **pg** — PostgreSQL driver
+- **jose** — JWT signing and verification
+- **bcryptjs** — password hashing
+- **Tailwind CSS 4**
+- **ESLint 9**
+
+The versions and available npm scripts are defined in `package.json`. fileciteturn53file0
+
+## Features
+
+### Public experience
+
+- Custom landing page at `/`
+- Public report browsing at `/browse`
+- Public report details at `/browse/[id]`
+- Public users can browse reports without accessing private management APIs
+
+### Authentication
+
+- Email/password registration and login
+- Password hashing with bcrypt
+- HTTP-only JWT session cookie
+- Current-user endpoint
+- Logout support
+- Seven-day session lifetime
+
+Sessions use the `flp_session` cookie and are implemented in `src/lib/auth.ts`. fileciteturn58file0
+
+### Role-based access control
+
+The application has three roles:
+
+| Role | Permissions |
+| --- | --- |
+| `finder` | Browse/read reports only |
+| `reporter` | Create reports and edit/delete only their own reports |
+| `admin` | Full report management and official status changes |
+
+Public registration always creates a `reporter`; users cannot self-select `admin`. fileciteturn55file0
+
+### Report management
+
+Authenticated report APIs are:
+
+- `GET /api/persons`
+- `POST /api/persons`
+- `GET /api/persons/[id]`
+- `PATCH /api/persons/[id]`
+- `DELETE /api/persons/[id]`
+
+Ownership is stored in `lostPersons.userId`, which references `users.id`. fileciteturn54file0
+
+### Ownership security
+
+Authorization is enforced on the server, not only by hiding frontend buttons.
+
+- Reporters can edit/delete only reports they own.
+- Admins can edit/delete any report.
+- Finders cannot create, edit, or delete reports.
+- The API checks the authenticated user's real database ID against the report's `userId`.
+
+### Case status permissions
+
+Official statuses are:
+
+- `missing`
+- `investigating`
+- `found`
+
+Only admins can directly change the official status. Non-admin users cannot bypass this restriction by manually calling the API.
+
+### My Reports
+
+`/my-reports` shows reports associated with the authenticated user's account.
+
+### Report information
+
+Reports can contain:
+
+- Full name
+- Age
+- Gender
+- Height
+- Complexion
+- Identifying marks
+- Photo
+- Last seen location
+- Last seen date
+- Clothing description
+- Case status
+- Description
+- Reporter name
+- Reporter relationship
+- Contact phone
+- Contact email
+- Created/updated timestamps
+
+The database model is defined in `src/db/schema.ts`. fileciteturn54file0
+
+## Routes
+
+### Pages
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Landing page |
+| `/browse` | Public report browsing |
+| `/browse/[id]` | Public report detail |
+| `/login` | Login |
+| `/my-reports` | Current user's reports |
+| `/dashboard` | Dashboard |
+| `/dashboard/persons/new` | Create a report |
+| `/dashboard/persons/[id]` | Private report detail/management |
+| `/dashboard/persons/[id]/edit` | Edit an authorized report |
+
+The old redundant `/dashboard/persons` listing route has been removed. The child routes above remain because they are still used for report creation and management.
+
+### API
+
+| Endpoint | Purpose |
+| --- | --- |
+| `POST /api/auth/login` | Authenticate a user |
+| `POST /api/auth/register` | Register a reporter account |
+| `GET /api/auth/me` | Get the current authenticated user |
+| `POST /api/auth/logout` | End the current session |
+| `GET /api/persons` | List private reports according to role/ownership |
+| `POST /api/persons` | Create a report |
+| `GET /api/persons/[id]` | Get an authorized private report |
+| `PATCH /api/persons/[id]` | Update an authorized report |
+| `DELETE /api/persons/[id]` | Delete an authorized report |
+| `GET /api/public/persons` | Public report listing |
+| `GET /api/public/persons/[id]` | Public report detail |
+| `GET /api/health` | Health check |
+| `/api/stats` | Dashboard statistics |
+| `/api/seed` | Development/demo seed endpoint |
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── api/
+│   │   ├── auth/
+│   │   ├── persons/
+│   │   ├── public/
+│   │   ├── health/
+│   │   ├── seed/
+│   │   └── stats/
+│   ├── browse/
+│   ├── dashboard/
+│   ├── login/
+│   └── my-reports/
+├── components/
+├── db/
+│   ├── index.ts
+│   └── schema.ts
+└── lib/
+    └── auth.ts
+```
+
+## Database
+
+The application uses PostgreSQL through Drizzle ORM and the `pg` driver.
+
+The database connection reads `DATABASE_URL` from the environment and requires it to be present. fileciteturn57file0
+
+### `users`
+
+Stores:
+
+- `id`
+- `name`
+- `email`
+- `passwordHash`
+- `role`
+- `createdAt`
+
+### `lost_persons`
+
+Stores report information and the owning `user_id`.
+
+The ownership field references `users.id` with cascade deletion. Indexes exist for report ownership and status. fileciteturn54file0
+
+## Getting Started
+
+### Requirements
+
+- Node.js 20+
 - npm
+- PostgreSQL
 
-## 1. Install dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/kishan-sip-it/LPFinder.git
+cd LPFinder
+```
+
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-## 2. Create the local database
+### 3. Create PostgreSQL database
 
-Open PostgreSQL:
+For the current local development setup, the database is named `find_db`.
 
-```bash
-psql -U postgres
-```
-
-Create the database:
+Example:
 
 ```sql
 CREATE DATABASE find_db;
 ```
 
-Exit:
-
-```sql
-\q
-```
-
-## 3. Configure environment variables
+### 4. Configure environment variables
 
 Create `.env.local` in the project root:
 
 ```env
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@127.0.0.1:5432/find_db
-AUTH_SECRET=change-this-for-local-development
+AUTH_SECRET=replace-with-a-long-random-secret
 ```
 
-Do not commit `.env.local` or `.env`.
+`DATABASE_URL` is required by the database layer. `AUTH_SECRET` is used to sign and verify JWT sessions. fileciteturn57file0turn58file0
 
-## 4. Create the database schema
+Never commit `.env.local`, database passwords, or production secrets.
 
-Preferred method:
+### 5. Prepare the database schema
 
-```bash
-npx drizzle-kit push
-```
+The project uses Drizzle ORM. Use the project's Drizzle configuration and schema to create/update the database schema.
 
-If the Drizzle CLI stops while pulling the schema and the database is still empty, create the two application tables manually in `find_db` using the SQL below.
+The main application tables are `users` and `lost_persons`. fileciteturn54file0
 
-```sql
-CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(120) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password_hash TEXT NOT NULL,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS lost_persons (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  full_name VARCHAR(160) NOT NULL,
-  age INTEGER,
-  gender VARCHAR(20),
-  height VARCHAR(40),
-  complexion VARCHAR(60),
-  identifying_marks TEXT,
-  photo_url TEXT,
-  last_seen_location VARCHAR(240),
-  last_seen_date VARCHAR(40),
-  clothing_description TEXT,
-  status VARCHAR(20) NOT NULL DEFAULT 'missing',
-  description TEXT,
-  reporter_name VARCHAR(160),
-  reporter_relation VARCHAR(80),
-  contact_phone VARCHAR(60),
-  contact_email VARCHAR(255),
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS lost_persons_user_idx
-  ON lost_persons(user_id);
-
-CREATE INDEX IF NOT EXISTS lost_persons_status_idx
-  ON lost_persons(status);
-```
-
-Verify the tables:
-
-```bash
-psql -U postgres -d find_db
-```
-
-```sql
-\dt
-```
-
-You should see `users` and `lost_persons`.
-
-## 5. Run locally
+### 6. Start development
 
 ```bash
 npm run dev
@@ -128,116 +259,71 @@ Open:
 http://localhost:3000
 ```
 
-## 6. Load the demo data
-
-The app includes a seed API route. It creates the demo user if needed and inserts the demo case records.
-
-With the development server running, open a second terminal and run:
-
-### PowerShell
-
-```powershell
-Invoke-WebRequest -Uri "http://localhost:3000/api/seed" -Method POST
-```
-
-### curl
+### 7. Production build
 
 ```bash
-curl -X POST http://localhost:3000/api/seed
+npm run build
+npm run start
 ```
 
-Demo account:
-
-| Email | Password |
-| --- | --- |
-| `demo@findlost.app` | `demo1234` |
-
-You can also use the **Explore live demo** button on the login screen.
-
-## Features
-
-- Email/password registration and login
-- HTTP-only JWT sessions
-- Password hashing with bcrypt
-- Create, read, update, and delete reports
-- Search by name/location
-- Status filters: `missing`, `investigating`, `found`
-- Dashboard statistics
-- Camera capture / image upload
-- Responsive dashboard with collapsible mobile navigation
-- Demo seeding endpoint
-- Health-check endpoint
-
-## Project structure
-
-```text
-src/
-├─ app/
-│  ├─ api/
-│  │  ├─ auth/
-│  │  │  ├─ register/route.ts
-│  │  │  ├─ login/route.ts
-│  │  │  ├─ logout/route.ts
-│  │  │  └─ me/route.ts
-│  │  ├─ persons/route.ts
-│  │  ├─ persons/[id]/route.ts
-│  │  ├─ stats/route.ts
-│  │  ├─ seed/route.ts
-│  │  └─ health/route.ts
-│  ├─ dashboard/
-│  ├─ page.tsx
-│  ├─ layout.tsx
-│  └─ globals.css
-├─ components/
-│  ├─ AuthProvider.jsx
-│  ├─ HomeClient.jsx
-│  ├─ DashboardShell.jsx
-│  ├─ Overview.jsx
-│  ├─ PersonsList.jsx
-│  ├─ PersonForm.jsx
-│  ├─ PersonDetail.jsx
-│  ├─ PersonEdit.jsx
-│  ├─ CameraCapture.jsx
-│  └─ StatusBadge.jsx
-├─ db/
-│  ├─ schema.ts
-│  └─ index.ts
-└─ lib/
-   └─ auth.ts
-```
-
-## Useful commands
+## npm Scripts
 
 ```bash
 npm run dev
 npm run build
-npm start
+npm run start
 npm run lint
 npm run typecheck
 ```
 
-## Camera permissions
+These scripts are defined in `package.json`. fileciteturn53file0
 
-Camera capture uses the browser `getUserMedia` API. It works on `localhost` and on HTTPS deployments, subject to browser permission. Uploading an existing image is available as a fallback.
+## Authorization Model
 
-## Security notes
-
-- Keep `DATABASE_URL` and `AUTH_SECRET` in environment variables.
-- Do not commit `.env` or `.env.local`.
-- If a database password has ever been committed to Git history, rotate that password before deploying.
-- The demo credentials are intentionally part of the demo flow; do not use them for production accounts.
-
-## Production checklist
-
-Before deployment, configure the production `DATABASE_URL` and `AUTH_SECRET`, ensure PostgreSQL is reachable from the server, apply the database schema, and run:
-
-```bash
-npm run build
-npm start
+```text
+                         ADMIN
+                           │
+               Full report management
+                 + status management
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+          REPORTER                    FINDER
+             │                           │
+      Create reports              Browse/read only
+      Manage own reports
+      No status changes
 ```
 
-The repository is a Next.js application, so it should be deployed as a Node/Next.js service rather than as a static-only site.
+### Important security rule
+
+Frontend UI restrictions are not treated as security boundaries.
+
+Every private report operation checks authentication and authorization on the server. Ownership is determined from the database's `lost_persons.user_id` value rather than trusting a client-provided ownership value.
+
+## Development Status
+
+The current project milestone includes:
+
+- Public report browsing
+- Public report details
+- My Reports
+- Authentication and RBAC
+- Finder/reporter/admin roles
+- Ownership-based report management
+- Server-side authorization
+- Admin-only official case-status changes
+- Redundant dashboard listing cleanup
+- Passing production build
+
+## Repository
+
+GitHub: https://github.com/kishan-sip-it/LPFinder
+
+## License
+
+No project license is currently documented in the repository. Add a `LICENSE` file and update this section when a license is selected.
 
 ---
 
-Built with care for families searching for hope.
+Built for the goal of helping people find missing loved ones and reunite families.
