@@ -1,11 +1,7 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import {
-  verifyPassword,
-  createSession,
-  type UserRole,
-} from "@/lib/auth";
+import { verifyPassword, createSession, type UserRole } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
@@ -57,9 +53,6 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error(e);
 
-    return Response.json(
-      { error: "Something went wrong." },
-      { status: 500 }
-    );
+    return Response.json({ error: "Something went wrong." }, { status: 500 });
   }
 }
